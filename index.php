@@ -4,6 +4,9 @@ include("sources/db/connection.php");
 
 
 
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -246,7 +249,7 @@ include("sources/db/connection.php");
         <form id="courseForm" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Nom du Cours *</label>
-                <input type="text" id="courseName"  required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none transition-all">
+                <input  type="text" id="courseName"  required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Catégorie *</label>
@@ -276,7 +279,7 @@ include("sources/db/connection.php");
                 <input type="number" id="courseParticipants" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div class="flex gap-3 pt-4">
-                <button type="button" onclick="submitCourseForm()" class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:from-indigo-600 hover:to-indigo-700 transition-all">
+                <button type="submit" onclick="submitCourseForm()" class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:from-indigo-600 hover:to-indigo-700 transition-all">
                     Enregistrer
                 </button>
                 <button type="button" onclick="closeCourseModal()" class="flex-1 bg-slate-800 text-slate-300 px-4 py-2 rounded-lg font-medium hover:bg-slate-700 transition-all">
@@ -291,14 +294,14 @@ include("sources/db/connection.php");
 <div id="equipmentModal" class="hidden fixed inset-0 bg-black/50 modal-backdrop flex items-center justify-center z-50">
     <div class="modal-content bg-slate-900 rounded-xl border border-slate-800 p-8 w-full max-w-md">
         <h3 class="text-2xl font-bold mb-6 text-slate-100">Ajouter un Équipement</h3>
-        <form id="equipmentForm" class="space-y-4">
+        <form id="equipmentForm" method="POST" action="" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Nom de l'Équipement *</label>
-                <input type="text" id="equipmentName" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none transition-all">
+                <input name="nom_equipement" type="text" id="equipmentName" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Type *</label>
-                <select id="equipmentType" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
+                <select name="type_equipement" id="equipmentType" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
                     <option value="">Sélectionner</option>
                     <option value="Tapis de course">Tapis de course</option>
                     <option value="Haltères">Haltères</option>
@@ -310,11 +313,11 @@ include("sources/db/connection.php");
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Quantité *</label>
-                <input type="number" id="equipmentQuantity" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
+                <input name="quantite_equipement" type="number" id="equipmentQuantity" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">État *</label>
-                <select id="equipmentCondition" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
+                <select name="etat_equipement" id="equipmentCondition" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-cyan-500 focus:outline-none transition-all">
                     <option value="">Sélectionner</option>
                     <option value="Bon">Bon</option>
                     <option value="Moyen">Moyen</option>
@@ -322,7 +325,7 @@ include("sources/db/connection.php");
                 </select>
             </div>
             <div class="flex gap-3 pt-4">
-                <button type="button" onclick="submitEquipmentForm()" class="flex-1 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white px-4 py-2 rounded-lg font-medium hover:from-cyan-600 hover:to-cyan-700 transition-all">
+                <button type="submit" class="flex-1 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white px-4 py-2 rounded-lg font-medium hover:from-cyan-600 hover:to-cyan-700 transition-all">
                     Enregistrer
                 </button>
                 <button type="button" onclick="closeEquipmentModal()" class="flex-1 bg-slate-800 text-slate-300 px-4 py-2 rounded-lg font-medium hover:bg-slate-700 transition-all">
@@ -332,6 +335,19 @@ include("sources/db/connection.php");
         </form>
     </div>
 </div>
+<?php 
+    
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nom= $_POST['nom_equipement'];
+    $type= $_POST['type_equipement'];
+    $quantite= $_POST['quantite_equipement'];
+    $etat= $_POST['etat_equipement'];
+    
+    $sql="INSERT INTO equipement (`nom`,`type`,`quantite`,`etat`)
+    VALUES('$nom','$type','$quantite','$etat')";
+    $result=mysqli_query($conn,$sql);
+
+?>
 
 <script>
     
