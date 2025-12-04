@@ -58,6 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")  {
 
 ?>
 
+<?php
+
+    if(isset($_GET['DEL_id'])){
+        $id_cours=$_GET['DEL_id'];
+        $sql="DELETE FROM cours WHERE id='$id_cours'";
+        mysqli_query($conn,$sql);
+    }
+
+
+?>
+
 
 
 
@@ -270,8 +281,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")  {
                                echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['heure'].'</th>';
                                 echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['duree'].'</th>';
                                 echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['nombre_max'].'</th>';
-                                echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>';
-                            echo'</tr>';
+                                echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300 flex gap-3"><button class="text-red-400"><a href="?DEL_id='.$rows['id'].'">delete</a></button>
+                            <button class="text-yellow-400"><a href="./pages/editCours.php?edite_id='.$rows['id'].'">Edit</a></button>
+                            </th>';
+                            echo '</tr>';
                             }
 
 
@@ -315,7 +328,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")  {
                             echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['quantite'].'</th>';
                             echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['etat'].'</th>';
                             echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300 flex gap-3"><button class="text-red-400"><a href="?del_id='.$rows['id'].'">delete</a></button>
-                            <button class="text-yellow-400"><a href="editEquipement.php">Edit</a></button>
+                            <button class="text-yellow-400"><a href="./pages/editEquipement.php?edit_id='.$rows['id'].'">Edit</a></button>
                             </th>';
                             echo '</tr>';
                             }
