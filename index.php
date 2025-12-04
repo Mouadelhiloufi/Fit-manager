@@ -4,6 +4,62 @@ include("sources/db/connection.php");
 
 
 
+<?php
+    if ($_SERVER["REQUEST_METHOD"] === "POST" )  {
+        if (isset($_POST['form_type']) && $_POST['form_type'] === "add_cours"){
+    $nom=$_POST['nom_cours'];
+    $categorie=$_POST['categorie_cours'];
+    $date=$_POST['date_cours'];
+    $heure=$_POST['heure_cours'];
+    $duree=$_POST['dure_cours'];
+    $max=$_POST['max_cours'];
+        $sql="INSERT INTO cours(`nom`,`category`,`date`,`heure`,`duree`,`nombre_max`)
+        VALUES('$nom','$categorie','$date','$heure','$duree','$max')";
+        $result=mysqli_query($conn,$sql);
+
+
+            header("Location: index.php");
+            exit();
+        }
+}
+
+
+?>
+
+
+
+
+<?php 
+    
+if ($_SERVER["REQUEST_METHOD"] === "POST")  {
+    if(isset($_POST['form_type']) && $_POST['form_type'] === "add_equipement"){
+    $nom= $_POST['nom_equipement'];
+    $type= $_POST['type_equipement'];
+    $quantite= $_POST['quantite_equipement'];
+    $etat= $_POST['etat_equipement'];
+    $sql="INSERT INTO equipement (`nom`,`type`,`quantite`,`etat`)
+    VALUES('$nom','$type','$quantite','$etat')";
+    $result=mysqli_query($conn,$sql);
+    header("Location: index.php");
+    exit();
+    }
+}
+
+?>
+
+<?php
+    if(isset($_GET['del_id'])){
+        $id_equipement=$_GET['del_id'];
+        $sql="DELETE FROM equipement WHERE id='$id_equipement'";
+        mysqli_query($conn,$sql);
+
+
+    }
+
+?>
+
+
+
 
 
 
@@ -202,6 +258,26 @@ include("sources/db/connection.php");
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">Participants</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>
                             </tr>
+
+                            <?php
+                            $sql="SELECT * FROM COURS";
+                            $result=mysqli_query($conn,$sql);
+                            while($rows=mysqli_fetch_assoc($result)){
+                                echo'<tr>';
+                               echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['nom'].'</th>';
+                               echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['category'].'</th>';
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['date'].'</th>';
+                               echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['heure'].'</th>';
+                                echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['duree'].'</th>';
+                                echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['nombre_max'].'</th>';
+                                echo'<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>';
+                            echo'</tr>';
+                            }
+
+
+
+                            ?>
+
                         </thead>
                         <tbody id="courses-table-body" class="divide-y divide-slate-700">
                             <!-- Populate from backend -->
@@ -229,6 +305,21 @@ include("sources/db/connection.php");
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">État</th>
                                 <th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">Actions</th>
                             </tr>
+                            <?php
+                            $sql="SELECT * FROM equipement";
+                            $result=mysqli_query($conn,$sql);
+                            while($rows=mysqli_fetch_assoc($result)){
+                            echo "<tr>";
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['nom'].'</th>';
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['type'].'</th>';
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['quantite'].'</th>';
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300">'.$rows['etat'].'</th>';
+                            echo '<th class="px-6 py-4 text-left text-sm font-semibold text-slate-300 flex gap-3"><button class="text-red-400"><a href="?del_id='.$rows['id'].'">delete</a></button>
+                            <button class="text-yellow-400"><a href="editEquipement.php">Edit</a></button>
+                            </th>';
+                            echo '</tr>';
+                            }
+                            ?>
                         </thead>
                         <tbody id="equipment-table-body" class="divide-y divide-slate-700">
                             <!-- Populate from backend -->
@@ -246,14 +337,15 @@ include("sources/db/connection.php");
 <div id="courseModal" class="hidden fixed inset-0 bg-black/50 modal-backdrop flex items-center justify-center z-50">
     <div class="modal-content bg-slate-900 rounded-xl border border-slate-800 p-8 w-full max-w-md">
         <h3 class="text-2xl font-bold mb-6 text-slate-100">Ajouter un Cours</h3>
-        <form id="courseForm" class="space-y-4">
+        <form method="POST" action="" id="courseForm" class="space-y-4">
+            <input type="hidden" name="form_type" value="add_cours">
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Nom du Cours *</label>
-                <input  type="text" id="courseName"  required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none transition-all">
+                <input  name="nom_cours" type="text" id="courseName"  required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Catégorie *</label>
-                <select id="courseCategory" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
+                <select name="categorie_cours" id="courseCategory" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
                     <option value="">Sélectionner</option>
                     <option value="Yoga">Yoga</option>
                     <option value="Musculation">Musculation</option>
@@ -264,22 +356,22 @@ include("sources/db/connection.php");
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Date *</label>
-                <input type="date" id="courseDate" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
+                <input name="date_cours" type="date" id="courseDate" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Heure *</label>
-                <input type="time" id="courseTime" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
+                <input name="heure_cours" type="time" id="courseTime" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Durée (minutes) *</label>
-                <input type="number" id="courseDuration" required min="15" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
+                <input name="dure_cours" type="number" id="courseDuration" required min="15" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Nombre de Participants *</label>
-                <input type="number" id="courseParticipants" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
+                <input name="max_cours" type="number" id="courseParticipants" required min="1" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 focus:border-indigo-500 focus:outline-none transition-all">
             </div>
             <div class="flex gap-3 pt-4">
-                <button type="submit" onclick="submitCourseForm()" class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:from-indigo-600 hover:to-indigo-700 transition-all">
+                <button type="submit"  class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:from-indigo-600 hover:to-indigo-700 transition-all">
                     Enregistrer
                 </button>
                 <button type="button" onclick="closeCourseModal()" class="flex-1 bg-slate-800 text-slate-300 px-4 py-2 rounded-lg font-medium hover:bg-slate-700 transition-all">
@@ -290,11 +382,14 @@ include("sources/db/connection.php");
     </div>
 </div>
 
+
+
 <!-- Equipment Modal -->
 <div id="equipmentModal" class="hidden fixed inset-0 bg-black/50 modal-backdrop flex items-center justify-center z-50">
     <div class="modal-content bg-slate-900 rounded-xl border border-slate-800 p-8 w-full max-w-md">
         <h3 class="text-2xl font-bold mb-6 text-slate-100">Ajouter un Équipement</h3>
         <form id="equipmentForm" method="POST" action="" class="space-y-4">
+            <input type="hidden" name="form_type" value="add_equipement">
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Nom de l'Équipement *</label>
                 <input name="nom_equipement" type="text" id="equipmentName" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none transition-all">
@@ -335,19 +430,8 @@ include("sources/db/connection.php");
         </form>
     </div>
 </div>
-<?php 
-    
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nom= $_POST['nom_equipement'];
-    $type= $_POST['type_equipement'];
-    $quantite= $_POST['quantite_equipement'];
-    $etat= $_POST['etat_equipement'];
-    
-    $sql="INSERT INTO equipement (`nom`,`type`,`quantite`,`etat`)
-    VALUES('$nom','$type','$quantite','$etat')";
-    $result=mysqli_query($conn,$sql);
 
-?>
+
 
 <script>
     
