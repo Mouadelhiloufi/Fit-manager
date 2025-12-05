@@ -1,13 +1,13 @@
-# 🏋️‍♂️ FitManager – Gestion des cours & équipements sportifs
+#  FitManager – Gestion des cours & équipements sportifs
 
 Mini-système permettant de gérer les **cours** et les **équipements** d’une salle de sport.  
 Le projet inclut un **CRUD complet**, un **dashboard**, et une **base de données structurée**.
 
 ---
 
-## 📂 Structure du projet
+##  Structure du projet
 
-PROJECTFRST/
+```PROJECTFRST/
 │
 ├── index.php 
 │
@@ -20,15 +20,15 @@ PROJECTFRST/
 │ └── db/
 │ └── connection.php 
 │
-└── outils/ 
+└── outils/ ```
 
 
 
 ---
 
-## 📊 Fonctionnalités du projet
+##  Fonctionnalités du projet
 
-### 🟦 1. Modélisation (ERD)
+###  1. Modélisation (ERD)
 
 Création d’un diagramme ERD contenant :
 
@@ -47,7 +47,7 @@ Création d’un diagramme ERD contenant :
 
 ---
 
-## 🟩 2. Base de données
+##  2. Base de données
 
 ### 🔹 Tables obligatoires
 - `cours`
@@ -71,19 +71,19 @@ Création d’un diagramme ERD contenant :
 
 
 
-## 🟧 3. Dashboard (index.php)
+##  3. Dashboard (index.php)
 
 Le tableau de bord affiche :
 
 - ✔ Total des cours  
 - ✔ Total des équipements  
-- 📊 Répartition des cours par catégorie  
-- 📊 Répartition des équipements par type  
-- ➕ (Optionnel) Graphique visuel  
+-  Répartition des cours par catégorie  
+-  Répartition des équipements par type  
+-  (Optionnel) Graphique visuel  
 
 ---
 
-## 🟪 4. Gestion des cours – CRUD complet
+##  4. Gestion des cours – CRUD complet
 
 ### ✔ Affichage
 Tableau contenant :
@@ -105,7 +105,7 @@ Page dédiée : `editCours.php`.
 
 ---
 
-## 🟫 5. Gestion des équipements – CRUD complet
+##  5. Gestion des équipements – CRUD complet
 
 ### ✔ Affichage
 Tableau contenant :
@@ -128,7 +128,7 @@ Contrôle des champs obligatoires.
 
 ---
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 - PHP  
 - MySQL  
