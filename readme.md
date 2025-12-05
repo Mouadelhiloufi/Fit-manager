@@ -20,7 +20,8 @@ Le projet inclut un **CRUD complet**, un **dashboard**, et une **base de donnée
 │ └── db/
 │ └── connection.php 
 │
-└── outils/ ```
+└── outils/ 
+```
 
 
 
